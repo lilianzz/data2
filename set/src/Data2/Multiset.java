@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 
-package Data1;
+package Data2;
 
 /**
  *
  * @author 栗粒盐
  */
-interface Multiset<T extends Comparable<T>> { 
+interface Multiset<T extends Comparable<T>> extends Sequenced<T> { 
     int cardinality();
     boolean isEmptyHuh();
     boolean member(T elt);    
-    int number(T elt);
+    int count(T elt);
     Multiset add(T elt);
     Multiset add(T elt, int n);
     Multiset remove(T elt);
@@ -27,5 +27,13 @@ interface Multiset<T extends Comparable<T>> {
     boolean subset(Multiset u);
     String toString();
     Multiset filter(T elt);
+    int getDepth();
+    T getKey();
+    //Multiset toSet(); -> iteration
+    Multiset right();
+    Multiset left();
+
+    public int sum();
+    public T nth(int n);
 }
 

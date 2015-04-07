@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 
-package Data1;
+package Data2;
+
 
 public class Finite {
 
@@ -15,33 +16,65 @@ public class Finite {
     
     // -> Multiset
     //generate random finite set of certain size
-    /*public static Multiset randMultiset(int size) {
-	Multiset temp = new Leaf();
+    public static Multiset randIntMset(int size) {
+	Multiset temp = new Leaf();        
 	for(; size > 0; size--) {
-	    temp = temp.add((int) ((Math.random()-.5) * 100));
+	    temp = temp.add((int) ((Math.random()-.5) * 100),((int) (Math.random() * 100)));
 	}
 	return temp;
     }
+    
+    public static Multiset randCharMset() {
+        Multiset temp = new Leaf();
+        for (int i =0; i<30; i++) {
+            temp = temp.add(((char) ((Math.random() * 26)+97)),((int) (Math.random() * 5)));      
+        }
+        return temp;
+    }
+    
+    public static boolean depthRoot(int size) {
+	Multiset temp = new Leaf();
+        boolean t = true;
+        int a;
+        int b;
+        for (int i=0;i<10;i++) {
+            temp = new Leaf();  
+            for(int j = 20; j > 0; j--) {
+                a = ((int) ((Math.random()-.5) * 100));
+                b = ((int)((Math.random()+1) * 5));
+                temp = temp.add(a,b);              
+            }
+            if (!(temp.getDepth() == (Math.max(temp.left().getDepth(), temp.right().getDepth())+1))) {
+               t = false;}
+        }
+        return t;
+    }
+    
     // test if cardinality of a random generated set is right
     public static boolean tCardi() {
-        BST temp = new Leaf();
-        int size = ((int)(Math.random() * 50));
+        Multiset temp = new Leaf();
+        //int size = ((int)(Math.random() * 50));
+        int size = 10;
         int s = 0;
         int c;
-        for(; size > 0; size--) {
-            c = (int) ((Math.random()-.5) * 100);
-            if (!temp.member(c)) s++;
-	    temp = temp.add(c);
+        int d;
+        for(; size > 0; size--) {            
+            c = ((int) ((Math.random()) * 10));
+            s = s + c;
+            d = ((int) (Math.random() * 10));
+	    temp = temp.add(d,c);
 	}
         if (temp.cardinality() == s) 
             return true;        
-        else
+        else {
+            System.out.println(temp.cardinality()+ " "+ s + " "+ temp+"" );
+        }
             return false;               
         
     }
     
     //member (add t x) y = true <-> x = y \/ member t y = true
-    public static boolean memberAdd (BST t) {
+    /*public static boolean memberAdd (BST t) {
         int x = ((int) ((Math.random()-.5) * 100));
         int y = ((int) ((Math.random()-.5) * 100));
         boolean o1 = t.add(x).member(y);
@@ -128,7 +161,7 @@ public class Finite {
     public static void main(String[] args) {
         // test on a given finite set
         
-        Multiset bot = new Leaf();
+        /*Multiset bot = new Leaf();
         Multiset t1 = new Branch( bot, 1, bot );
         Multiset t3 = new Branch( bot, 3, bot );
         Multiset t2 = new Branch( t1, 2, t3 );
@@ -163,17 +196,39 @@ public class Finite {
         System.out.println(""+t5.number(6));
         System.out.println(""+t5.filter(6));
         System.out.println(""+t5.add(6,4));
-        System.out.println(""+t5.add(6,4).remove(6,9));
-        /*
+        System.out.println(""+t5.add(6,4).remove(6,9)); */
+        
+        Multiset tt = new Leaf();
+        tt = tt.add('a');
+        tt = tt.add('b');
+        /*System.out.println(""+tt);
+        System.out.println(""+tt.cardinality());
+        System.out.println(""+tt.remove('b'));
+        System.out.println(""+tt.add('a').removeall('a'));*/
+        Multiset aa = new Leaf();
+        aa = aa.add(1,5).add(6,2);
+        Multiset bb = new Leaf();
+        bb = bb.add(1,3).add(3).add(4).add(2).add(6).add(5).add(3).add(1,5).add(10).add(1).add(15);
+        System.out.println(""+aa) ;            
+        System.out.println(""+bb) ;
+        /*System.out.println(""+aa.union(bb)) ;        
+        System.out.println(""+aa.filter(1)) ;
+        System.out.println(bb.sum());                  
+        System.out.println(""+bb) ;                
+        */System.out.println(""+((Branch) bb).key) ;
+        System.out.println(depthRoot(50));
+        System.out.println(randCharMset());
+        
         // tests on randomly generated finite sets
         boolean t = true;
-        for(int i=0; i < 300; i++) {
+        //for(int i=0; i < 300; i++) {
             if (!tCardi()) {
                 t = false;
             }            
-        }
+        //}
         System.out.println("Whether passed cardinality test: "+t+"   (supposed to be true)");
-        t=true;
+        
+        /*t=true;
         for(int i = 0; i< 300; i++) {
             t1 = randBST((int)(Math.random() * 30));
             t2 = randBST((int)(Math.random() * 30));
